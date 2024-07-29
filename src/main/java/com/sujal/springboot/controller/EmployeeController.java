@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -76,4 +78,11 @@ public class EmployeeController {
     	response.put("Deleted", Boolean.TRUE);
     	return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/employees/search")
+    public ResponseEntity<List<Employee>> searchEmployee(@RequestParam String keyword) {
+        List<Employee> emps = employeeRepository.searchEmployees(keyword);
+        return new ResponseEntity<List<Employee>>(emps, HttpStatus.OK);
+    }
+    
 }
